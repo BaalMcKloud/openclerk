@@ -20,6 +20,7 @@
  */
 
 define('BATCH_JOB_START', microtime(true));
+define('USE_MASTER_DB', true);		// always use the master database for selects!
 
 require(__DIR__ . "/../inc/global.php");
 require(__DIR__ . "/_batch.php");
@@ -84,6 +85,7 @@ $standard_jobs = array(
 	array('table' => 'addresses', 'type' => 'vertcoin', 'query' => ' AND currency=\'vtc\''), // make sure to add _block job below too
 	array('table' => 'addresses', 'type' => 'netcoin', 'query' => ' AND currency=\'net\''), // make sure to add _block job below too
 	array('table' => 'addresses', 'type' => 'hobonickels', 'query' => ' AND currency=\'hbn\''), // make sure to add _block job below too
+	array('table' => 'addresses', 'type' => 'blackcoin', 'query' => ' AND currency=\'bc1\''), // make sure to add _block job below too
 	array('table' => 'accounts_generic', 'type' => 'generic', 'failure' => true),
 	array('table' => 'accounts_bit2c', 'type' => 'bit2c', 'failure' => true),
 	array('table' => 'accounts_btce', 'type' => 'btce', 'failure' => true),
@@ -99,8 +101,6 @@ $standard_jobs = array(
 	array('table' => 'accounts_btcguild', 'type' => 'btcguild', 'failure' => true),
 	array('table' => 'accounts_hypernova', 'type' => 'hypernova', 'failure' => true),
 	array('table' => 'accounts_ltcmineru', 'type' => 'ltcmineru', 'failure' => true),
-	array('table' => 'accounts_miningforeman', 'type' => 'miningforeman', 'failure' => true),
-	array('table' => 'accounts_miningforeman_ftc', 'type' => 'miningforeman_ftc', 'failure' => true),
 	array('table' => 'accounts_havelock', 'type' => 'havelock', 'failure' => true),
 	array('table' => 'securities_havelock', 'type' => 'securities_havelock', 'user_id' => get_site_config('system_user_id'), 'failure' => true),
 	array('table' => 'accounts_bitminter', 'type' => 'bitminter', 'failure' => true),
@@ -159,6 +159,7 @@ $standard_jobs = array(
 	array('table' => 'accounts_poloniex', 'type' => 'poloniex', 'failure' => true),
 	array('table' => 'accounts_mupool', 'type' => 'mupool', 'failure' => true),
 	array('table' => 'accounts_anxpro', 'type' => 'anxpro', 'failure' => true),
+	array('table' => 'accounts_bittrex', 'type' => 'bittrex', 'failure' => true),
 
 	array('table' => 'exchanges', 'type' => 'reported_currencies', 'query' => ' AND track_reported_currencies=1', 'user_id' => get_site_config('system_user_id')),
 
@@ -306,11 +307,11 @@ foreach ($standard_jobs as $standard) {
 }
 
 if (!$premium_only) {
-	$block_jobs = array('version_check', 'litecoin_block',
+	$block_jobs = array('version_check', 'vote_coins', 'litecoin_block',
 		'feathercoin_block', 'ppcoin_block', 'novacoin_block', 'primecoin_block',
 		'terracoin_block', 'dogecoin_block', 'megacoin_block', 'namecoin_block',
 		'digitalcoin_block', 'worldcoin_block', 'ixcoin_block',
-		'netcoin_block', 'hobonickels_block');
+		'netcoin_block', 'hobonickels_block', 'blackcoin_block');
 	foreach ($block_jobs as $name) {
 		// as often as we can (or on request), run litecoin_block jobs
 		if (!$job_type || in_array($name, $job_type)) {

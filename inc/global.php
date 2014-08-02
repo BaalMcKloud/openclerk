@@ -34,15 +34,19 @@ if (isset($_COOKIE["locale"]) && !isset($_SESSION["locale"]) && in_array($_COOKI
  * ({@code get_site_config('database_slave')}),
  * without having to change instances of {@code db()->prepare($query)} throughout the site.
  *
+ * <p>
  * Otherwise this function should be functionally identical to
  * {@code db()->prepare($query)}.
+ *
+ * <p>
+ * We can force the master database to be used by setting the define {@code USE_MASTER_DB}.
  */
 class ReplicatedDbWrapper {
 	// necessary to emulate lastInsertId()
 	var $last_db;
 
 	public function prepare($query) {
-		if (get_site_config('database_slave') && !ReplicatedDbWrapper::isWriteQuery($query)) {
+		if (get_site_config('database_slave') && !ReplicatedDbWrapper::isWriteQuery($query) && !defined('USE_MASTER_DB')) {
 			if (get_site_config('timed_sql')) {
 				global $global_timed_sql;
 				$global_timed_sql['slave']++;
@@ -405,13 +409,18 @@ function log_uncaught_exception($e, $extra_args = array(), $extra_query = "") {
 		line_number=?,
 		raw=?,
 		created_at=NOW() $extra_query");
+	try {
+		$serialized = serialize($e);
+	} catch (Exception $e) {
+		$serialized = $e->getMessage() . ": " . print_r($e, true);
+	}
 	$q->execute(array_join(array(
 		// clamp messages to 255 characters
 		mb_substr($e->getMessage(), 0, 255),
 		mb_substr($e->getPrevious() ? $e->getPrevious()->getMessage() : "", 0, 255),
 		mb_substr($e->getFile(), 0, 255),
 		$e->getLine(),
-		mb_substr(serialize($e), 0, 65535),
+		mb_substr($serialized, 0, 65535),
 	), $extra_args));
 }
 
@@ -842,6 +851,10 @@ function number_format_precision($n, $precision) {
 	return number_format_autoprecision($n, $precision);
 }
 
+/**
+ * Format a number to the lowest precision that's necessary, to a maximum of the
+ * given precision.
+ */
 function number_format_autoprecision($n, $precision = 8, $dec_point = ".", $thousands_sep = ",") {
 	// find the lowest precision that we need
 	for ($i = 0; $i < $precision - 1; $i++) {
@@ -852,6 +865,23 @@ function number_format_autoprecision($n, $precision = 8, $dec_point = ".", $thou
 	}
 
 	return number_format($n, $precision, $dec_point, $thousands_sep);
+}
+
+/**
+ * Format a number to a human readable amount of precision.
+ */
+function number_format_human($n, $extra_precision = 0) {
+	if (abs($n) < 1e-4) {
+		return number_format_autoprecision($n, 8 + $extra_precision, '.', '');
+	} else if (abs($n) < 1e-2) {
+		return number_format_autoprecision($n, 6 + $extra_precision, '.', '');
+	} else if (abs($n) < 1e4) {
+		return number_format_autoprecision($n, 4 + $extra_precision, '.', '');
+	} else if (abs($n) < 1e6) {
+		return number_format_autoprecision($n, 2 + $extra_precision, '.', '');
+	} else {
+		return number_format_autoprecision($n, 0 + $extra_precision, '.', '');
+	}
 }
 
 // remove any commas; intended to be reverse of number_format()

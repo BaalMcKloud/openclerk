@@ -49,7 +49,7 @@ function get_default_site_config() {
 		"site_id" => "openclerk",
 		"openid_host" => "localhost",
 		"absolute_url" => "http://localhost/clerk/",
-		"openclerk_version" => "0.26",		// this is just a label displayed at the bottom of each page
+		"openclerk_version" => "0.27",		// this is just a label displayed at the bottom of each page
 
 		"database_url" => "mysql:host=localhost;dbname=clerk",
 		"database_username" => "clerk",
@@ -93,6 +93,7 @@ function get_default_site_config() {
 		"autologin_cookie_seconds" => 60 * 60 * 24 * 30,
 		"external_sample_size" => 10000,	// what is the max number of jobs to sample when updating the external API page?
 		"default_cache_seconds" => 60 * 60 * 24 * 7,		// allow things to be cached for up to a week by default
+		"vote_coins_multiplier" => 10,		// voting multiplier
 
 		// issue #12: allow unsafe accounts?
 		'allow_unsafe' => false,
@@ -164,10 +165,10 @@ function get_default_site_config() {
 		"ftc_block_url" => "http://explorer.feathercoin.com/chain/Feathercoin/q/getblockcount",
 		"ppc_address_url" => "http://ppc.blockr.io/api/v1/address/info/",
 		"ppc_block_url" => "http://ppc.blockr.io/api/v1/block/info/last",
-		"nvc_address_url" => "http://nvc.cryptocoinexplorer.com/address/",
+		"nvc_address_url" => "https://explorer.novaco.in/address/",
 		// not implemented yet!
 		// "nvc_block_url" => "http://nvc.cryptocoinexplorer.com/chain/Novacoin/q/getblockcount",
-		"nvc_block_url_html" => "http://nvc.cryptocoinexplorer.com/block/-1",		// for obtaining block count manually
+		"nvc_block_url_html" => "https://explorer.novaco.in/",		// for obtaining block count manually
 		"xpm_address_url" => "http://xpm.cryptocoinexplorer.com/address/",
 		// not implemented yet!
 		// "xpm_block_url" => "http://xpm.cryptocoinexplorer.com/chain/Primecoin/q/getblockcount",
@@ -181,8 +182,8 @@ function get_default_site_config() {
 		"mec_address_url" => "http://mega.rapta.net:2750/address/",
 		"mec_block_url" => "http://mega.rapta.net:2750/chain/Megacoin/q/getblockcount",
 		"xrp_address_url" => "https://ripple.com/graph/#",
-		"nmc_address_url" => "http://192.241.222.65/address/",
-		"nmc_block_url" => "http://192.241.222.65/chain/Namecoin/q/getblockcount",
+		"nmc_address_url" => "http://namecha.in/address/",
+		"nmc_block_url_html" => "http://namecha.in/",
 		"dgc_address_url" => "http://dgc.blockr.io/api/v1/address/info/",
 		"dgc_block_url" => "http://dgc.blockr.io/api/v1/block/info/last",
 		"wdc_address_url" => "http://www.worldcoinexplorer.com/api/address/",
@@ -195,6 +196,9 @@ function get_default_site_config() {
 		"net_block_url" => "http://explorer.netcoinfoundation.org/chain/Netcoin/q/getblockcount",
 		"hbn_address_url" => "http://162.217.249.198:1080/address/",
 		"hbn_block_url" => "http://162.217.249.198:1080/chain/Hobonickels/q/getblockcount",
+		"bc1_address_url" => "http://blackcha.in/address/",
+		"bc1_balance_url" => "http://blackcha.in/api/address/",
+		"bc1_block_url" => "http://blackcha.in/api/status?q=getInfo",
 		"btc_confirmations" => 6,
 		"ltc_confirmations" => 6,
 		"ftc_confirmations" => 6,
@@ -237,6 +241,7 @@ function get_default_site_config() {
 		"premium_reminder_days" => 7,	// when premium will expire in X days, send a reminder email
 		"outstanding_reminder_hours" => 24,		// when a payment is outstanding, send a reminder every X hours
 		"outstanding_abandon_days" => 7,		// when a payment is outstanding, abandon it after X days
+		"premium_user_votes" => 10,		// how many extra votes do premium users get?
 
 		"premium_btc_discount" => 0, // in %, e.g. 1=100%
 		"premium_ltc_discount" => 0, // in %

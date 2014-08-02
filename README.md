@@ -5,27 +5,116 @@ An open source project to keep track of cryptocurrency finances, based on an int
 
 *NOTE* This is an experimental Git clone of the parent Subversion repository hosted on Google Code: http://code.google.com/p/openclerk/
 
-List of features that present in the first release, now running at https://cryptfolio.com:
+## Features
+
+List of features that are also running at https://cryptfolio.com:
 
 * Easy-to-use web interface based in PHP
-* Create free accounts through OpenID
-* Support for multiple cryptocurrencies (BTC, LTC, NMC)
-* Support for multiple fiat currencies (USD, NZD)
-* Support for offline wallets
-* Support for online wallets
-	* Mt.Gox
-	* BTC-e
-	* Vircurex
-	* Litecoin Global
-	* BTC Trading Co.
-	* Generic API
-* Support for multiple exchanges
-	* Mt.Gox
-	* BTC-e
-	* Vircurex
-	* BitNZ
-* User-defined summary home page with configurable graphs and level of detail
-* External API summary page
+* Create free accounts through OpenID or passwords
+* Support for multiple currencies
+  * Cryptocurrencies (BTC, LTC, NMC, PPC, FTC, NVC, XPM, TRC, DOGE, MEC, XRP, DGC, WDC, IXC, VTC, NET, HBN, BC)
+  * Fiat currencies (USD, GBP, EUR, CAD, AUD, NZD, CNY, PLN, ILS, KRW, SGD)
+  * Commodity currencies (GHS)
+* Support for exchange wallets
+  * ANXPRO
+  * Bit2c
+  * Bitcurex EUR
+  * Bitcurex PLN
+  * BitMarket.pl
+  * Bitstamp
+  * Bittrex
+  * BTC-e
+  * CEX.io
+  * Coinbase
+  * Crypto-Trade
+  * Cryptsy
+  * Justcoin
+  * Kraken
+  * Mt.Gox
+  * Poloniex
+  * Vault of Satoshi
+  * Vircurex
+* Support for currency exchanges
+  * ANXPRO
+  * Bit2c
+  * Bitcurex
+  * BitMarket.pl
+  * BitNZ
+  * Bitstamp
+  * Bittrex
+  * BTC China
+  * BTC-e
+  * CEX.io
+  * Coinbase
+  * Coins-E
+  * Crypto-Trade
+  * Cryptsy
+  * Justcoin
+  * Kraken
+  * itBit
+  * MintPal
+  * Mt.Gox
+  * Poloniex
+  * TheMoneyConverter
+  * Vault of Satoshi
+  * Vircurex
+  * VirtEx
+  * Market averages
+* Support for mining pools and miner hashrates
+  * 50BTC
+  * b(e^5)r.org
+  * BitMinter
+  * BTC Guild
+  * CoinHuntr
+  * CryptoPools
+  * Cryptotroll
+  * d2
+  * dedicatedpool.com
+  * Dogechain Pool
+  * dogepool.pw
+  * Ecoining
+  * Eligius
+  * Elitist Jerks
+  * GHash.io
+  * Give Me Coins
+  * HashFaster
+  * Hypernova
+  * ltc.kattare.com
+  * nvc.khore.org
+  * litecoinpool.org
+  * LiteGuardian
+  * Litepool
+  * LTCMine.ru
+  * MiningPool.co
+  * Multipool
+  * MuPool
+  * Nut2Pools
+  * Ozcoin
+  * Pool-x.eu
+  * RapidHash
+  * ScryptGuild
+  * scryptpools.com
+  * Shibe Pool
+  * Slush's pool
+  * TeamDoge
+  * TripleMining
+  * WeMineFTC
+  * WeMineLTC
+  * ypool.net
+* Support for securities exchanges
+  * 796 Xchange
+  * BTCInve
+  * Crypto-Trade
+  * Cryptostocks
+  * Havelock Investments
+  * Litecoininvest
+* User-defined reports page with configurable graphs and level of detail
+* User-defined notifications on exchanges, balances and hashrates
+* Plenty of helpful tools
+  * Historical data for exchanges
+  * External API status page
+  * Cryptocurrency calculator widget, e.g.: https://cryptfolio.com/calculator
+  * Comprehensive administrator interface
 * Premium accounts to support site hosting and access more frequently updated data and advanced reports
 
 More information: http://openclerk.org

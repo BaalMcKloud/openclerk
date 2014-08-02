@@ -13,6 +13,7 @@
  */
 
 define('BATCH_JOB_START', microtime(true));
+define('USE_MASTER_DB', true);		// always use the master database for selects!
 
 if (!defined('ADMIN_RUN_JOB')) {
 	require(__DIR__ . "/../inc/global.php");
@@ -219,6 +220,10 @@ try {
 			require(__DIR__ . "/../jobs/hobonickels.php");
 			break;
 
+		case "blackcoin":
+			require(__DIR__ . "/../jobs/blackcoin.php");
+			break;
+
 		case "litecoin_block":
 			require(__DIR__ . "/../jobs/litecoin_block.php");
 			break;
@@ -273,6 +278,10 @@ try {
 
 		case "hobonickels_block":
 			require(__DIR__ . "/../jobs/hobonickels_block.php");
+			break;
+
+		case "blackcoin_block":
+			require(__DIR__ . "/../jobs/blackcoin_block.php");
 			break;
 
 		case "generic":
@@ -333,14 +342,6 @@ try {
 
 		case "ltcmineru":
 			require(__DIR__ . "/../jobs/ltcmineru.php");
-			break;
-
-		case "miningforeman":
-			require(__DIR__ . "/../jobs/miningforeman.php");
-			break;
-
-		case "miningforeman_ftc":
-			require(__DIR__ . "/../jobs/miningforeman_ftc.php");
 			break;
 
 		case "havelock":
@@ -571,6 +572,10 @@ try {
 			require(__DIR__ . "/../jobs/anxpro.php");
 			break;
 
+		case "bittrex":
+			require(__DIR__ . "/../jobs/bittrex.php");
+			break;
+
 		// individual securities jobs
 		case "individual_cryptostocks":
 			require(__DIR__ . "/../jobs/individual_cryptostocks.php");
@@ -617,6 +622,10 @@ try {
 
 		case "version_check":
 			require(__DIR__ . "/../jobs/version_check.php");
+			break;
+
+		case "vote_coins":
+			require(__DIR__ . "/../jobs/vote_coins.php");
 			break;
 
 		// transaction jobs

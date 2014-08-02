@@ -57,19 +57,27 @@ if (isset($info['error']) && preg_match("/nonce value is too big/", $info['error
 if (isset($info['error'])) {
 	throw new ExternalAPIException(htmlspecialchars($info['error']));
 }
+if (isset($info['status']) && $info['status'] == 'error') {
+	if (isset($info['message'])) {
+		throw new ExternalAPIException(htmlspecialchars($info['message']));
+	} else {
+		throw new ExternalAPIException("API returned unspecified error");
+	}
+}
 crypto_log(print_r($info, true));
 
 // we process both wallets...
 $get_supported_wallets = get_supported_wallets();
 $currencies = $get_supported_wallets['crypto-trade']; // also supports trc, cnc, wdc etc
 foreach ($currencies as $currency) {
+	$currency_key = strtolower(get_currency_abbr($currency));
 
-	crypto_log($exchange . " balance for " . $currency . ": " . $info['data']['funds'][$currency]);
-	if (!isset($info['data']['funds'][$currency])) {
-		throw new ExternalAPIException("Did not find funds for currency $currency in $exchange");
+	crypto_log($exchange . " balance for " . $currency . ": " . $info['data']['funds'][$currency_key]);
+	if (!isset($info['data']['funds'][$currency_key])) {
+		throw new ExternalAPIException("Did not find funds for currency $currency ($currency_key) in $exchange");
 	}
 
-	$balance = $info['data']['funds'][$currency];
+	$balance = $info['data']['funds'][$currency_key];
 	insert_new_balance($job, $account, $exchange, $currency, $balance);
 
 }

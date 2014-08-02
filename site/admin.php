@@ -48,6 +48,8 @@ $graph = array(
 	<li><a href="<?php echo htmlspecialchars(url_for("admin_accounts")); ?>">Accounts Status</a></li>
 	<li><a href="<?php echo htmlspecialchars(url_for("admin_metrics")); ?>">Site performance metrics</a></li>
 	<li><a href="<?php echo htmlspecialchars(url_for("admin_reported_currencies")); ?>">Exchange reported currencies</a></li>
+	<li><a href="<?php echo htmlspecialchars(url_for("admin_vote_coins")); ?>">Coin voting</a></li>
+	<li><a href="<?php echo htmlspecialchars(url_for("admin_show_explorers")); ?>">Show coin explorers</a></li>
 </ul>
 
 <h2 style="clear: both;"><a href="<?php echo htmlspecialchars(url_for('admin_exceptions')); ?>">Recent Exceptions</a></h2>
@@ -133,7 +135,15 @@ $graph = array(
 		?>
 	<tr>
 		<th><?php echo htmlspecialchars($key); ?></th>
-		<td class="number"><span class="<?php echo $status ? "status_percent " . $status : ""; ?>"><?php echo $key == "created_at" ? recent_format_html($value) : number_format($value, $dp); echo $suffix; ?></span></td>
+		<td class="number"><span class="<?php echo $status ? "status_percent " . $status : ""; ?>">
+			<?php if ($key == "created_at") {
+				echo recent_format_html($value);
+			} else if (is_numeric($value)) {
+				echo number_format($value, $dp);
+			} else {
+				echo htmlspecialchars($value);
+			}
+			echo $suffix; ?></span></td>
 	</tr>
 	<?php } ?>
 	<tr>

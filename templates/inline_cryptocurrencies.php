@@ -35,9 +35,11 @@
 		<li><span class="currency_name_vtc"><a href="http://www.vertcoin.org/" target="_blank">Vertcoin</a> - <a href="http://vertcoinforum.com/" target="_blank">Vertcoin Forum</a></span></li>
 		<li><span class="currency_name_net"><a href="http://netcoinfoundation.org/" target="_blank">Netcoin</a> - <a href="http://forum.netcoinfoundation.org/" target="_blank">Netcoin Forum</a></span></li>
 		<li><span class="currency_name_hbn"><a href="http://hobonickels.info/" target="_blank">Hobonickels</a> - <a href="http://www.reddit.com/r/hobonickel" target="_blank">/r/hobonickel</a></span></li>
+		<li><span class="currency_name_bc1"><a href="http://www.blackcoin.co/" target="_blank">Blackcoin</a> - <a href="http://www.blackcoin.co/" target="_blank">What is Blackcoin?</a></span></li>
 	</ul>
 </p>
 
 <p>
-	Support for additional cryptocurrencies will be <a href="<?php echo htmlspecialchars(url_for('kb', array('q' => 'add_currency'))); ?>">added in the future</a>.
+	Support for additional cryptocurrencies will be <a href="<?php echo htmlspecialchars(url_for('kb', array('q' => 'add_currency'))); ?>">added in the future</a>,
+	and you can <a href="<?php echo htmlspecialchars(url_for('vote_coins')); ?>">vote on currencies to be added</a> with your <?php echo get_site_config('site_name'); ?> account <span class="new">new</span>.
 </p>

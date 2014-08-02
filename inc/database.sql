@@ -4382,3 +4382,76 @@ INSERT INTO exchanges SET name='itbit';
 -- issue #126: keep track of number of emails sent
 ALTER TABLE users ADD emails_sent int not null default 0;
 ALTER TABLE site_statistics ADD total_emails_sent int;
+
+-- --------------------------------------------------------------------------
+-- upgrade statements from 0.26 to 0.27
+-- NOTE make sure you set jobs_enabled=false while upgrading the site and executing these queries!
+-- --------------------------------------------------------------------------
+-- at some point, this can go into an upgrade script (#115); for now, just execute it as part of every upgrade step
+DELETE FROM admin_messages WHERE message_type='version_check' AND is_read=0;
+
+-- disable Mining Foreman accounts
+UPDATE accounts_miningforeman SET is_disabled=1;
+UPDATE accounts_miningforeman_ftc SET is_disabled=1;
+
+-- issue #171: add Bittrex exchange
+DROP TABLE IF EXISTS accounts_bittrex;
+
+CREATE TABLE accounts_bittrex (
+  id int not null auto_increment primary key,
+  user_id int not null,
+  created_at timestamp not null default current_timestamp,
+  last_queue timestamp,
+
+  title varchar(255),
+  api_key varchar(255) not null,
+  api_secret varchar(255) not null,
+
+  is_disabled tinyint not null default 0,
+  failures tinyint not null default 0,
+  first_failure timestamp null,
+  is_disabled_manually tinyint not null default 0,
+
+  INDEX(user_id), INDEX(last_queue), INDEX(is_disabled), INDEX(is_disabled_manually)
+);
+
+INSERT INTO exchanges SET name='bittrex';
+UPDATE exchanges SET track_reported_currencies=1 WHERE name='bittrex';
+
+-- issue #264: allow users to vote for new coins
+DROP TABLE IF EXISTS vote_coins;
+CREATE TABLE vote_coins (
+  id int not null auto_increment primary key,
+  created_at timestamp not null default current_timestamp,
+
+  last_updated timestamp,
+  total_votes float,
+  total_users int,
+
+  code varchar(32),
+  title varchar(255)
+);
+
+DROP TABLE IF EXISTS vote_coins_votes;
+CREATE TABLE vote_coins_votes (
+  id int not null auto_increment primary key,
+  user_id int not null,
+  coin_id int not null,
+  created_at timestamp not null default current_timestamp,
+
+  INDEX(user_id), INDEX(coin_id)
+);
+
+-- issue #158: add Blackcoin BC cryptocurrency
+DROP TABLE IF EXISTS blackcoin_blocks;
+
+CREATE TABLE blackcoin_blocks (
+  id int not null auto_increment primary key,
+  created_at timestamp not null default current_timestamp,
+
+  blockcount int not null,
+
+  is_recent tinyint not null default 0,
+
+  INDEX(is_recent)
+);
